@@ -17,7 +17,7 @@ const WatchList = () => {
                   </div>
                   <span>
                     <div
-                      className="movie-watched"
+                      className="movie-title"
                       onClick={() => {
                         updateMovieList(movie, "movies-watched", "movies-all");
                       }}
@@ -25,10 +25,7 @@ const WatchList = () => {
                       {movie.title}
                     </div>
                   </span>
-                  <br />
                   <span>{movie.comment}</span>
-                  <br />
-                  <br />
                 </div>
               ))}
             {list["movies-all"].length === 0 && <h1>No movies to watch</h1>}

@@ -1,5 +1,6 @@
 body {
-  background-color: #ddf;
+  background-color: #313150;
+  color: white;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -15,19 +16,21 @@ code {
 
 .watched {
 	margin: 0 auto;
-	width: 30%;   /* better to give a fixed width for this */
 }
 
 .span {
 	float: left;
 }
 
-img {     /* better to have a background as color black and give that div a fixed with*/
-	border-right: 60px solid black; 
-	border-left: 60px solid black;
+.all {
+	margin: 20px;
+  background: #0000008f;
+  padding: 10px;
+  border-radius: 8px;
 }
 
-.all {
-	margin: 0 auto;
-	width: 30%;    /* better to give a fixed width for this */
+.add-movie-button {
+  margin-top: 12px;
+  margin-bottom: 24px;
+  padding: 8px;
 }

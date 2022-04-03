@@ -65,6 +65,7 @@ const AddMovie = () => {
           </b>
           <br />
           <input
+            className="add-movie-button"
             type="button"
             disabled={!add}
             onClick={() => addMovie(updateMovieList)}
