@@ -13,7 +13,7 @@ const WatchList = () => {
               list["movies-all"].map((movie) => (
                 <div className="all" key={movie.title}>
                   <div>
-                    <img src={movie.image} height="100px" />
+                    <img alt="movie-pic" src={movie.image} height="100px" />
                   </div>
                   <span>
                     <div

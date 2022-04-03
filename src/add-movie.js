@@ -34,6 +34,7 @@ const AddMovie = () => {
             <input
               type="text"
               value={title}
+              maxLength="100"
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
@@ -57,6 +58,7 @@ const AddMovie = () => {
             <br />
             <input
               type="text"
+              maxLength="100"
               value={comment}
               onChange={(e) => {
                 setComment(e.target.value);

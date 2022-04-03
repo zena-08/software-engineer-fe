@@ -6,6 +6,7 @@ export const MoviesContainer = styled.div`
     padding: 0 36px;
     position: relative;
     justify-content: space-around;
+    word-break: break-word;
     .movie-title {
         font-size: 1.5em;
         margin: 12px 0;
