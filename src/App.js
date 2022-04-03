@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-
-import { addWatchedMovie, add, removeWatchedMovie, getWatchedMovies, getAllMovies } from './index.js';
+// the below imports could be sent as props and used instead of forming cyclic dependencies as we already import App.js in index.js
+import { addWatchedMovie, add, removeWatchedMovie, getWatchedMovies, getAllMovies } from './index.js'; 
 
 const getMoviesComponents = (movies) => {
   var components = [];
@@ -57,11 +57,12 @@ function getWatchedMoviesComponents(movies) {
   return components;
 }
 
-function App(props) {
+function App(props) {     //props are never being used instead the functions needed are directly being imported
+  // the below piece of component could be divided into three different components : AddMovie, WatchList, WatchedMovies
   return (
     <div className="App">
       <h1>Codest Movies!</h1>
-      <h1>Add movie!</h1>
+      <h1>Add movie!</h1>     
       <b>TITLE:<br /><input type="text" onChange={function(e) { title = e.target.value; }} /></b><br />
       <b>IMAGE URL:<br /><input type="text" onChange={function(e) { image = e.target.value; }} /></b><br />
       <b>COMMENT:<br /><input type="text" onChange={function(e) { comment = e.target.value; }} /></b><br />
