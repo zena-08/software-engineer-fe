@@ -36,7 +36,11 @@ const AddMovie = () => {
               value={title}
               maxLength="100"
               onChange={(e) => {
-                setTitle(e.target.value);
+                if (e.target.value.replace(/\s/g, '').length > 0) {
+                    setTitle(e.target.value);
+                } else {
+                    setTitle('');
+                }
               }}
             />
           </b>
@@ -48,7 +52,11 @@ const AddMovie = () => {
               type="text"
               value={image}
               onChange={(e) => {
-                setImage(e.target.value);
+                if (e.target.value.replace(/\s/g, '').length > 0) {
+                    setImage(e.target.value);
+                } else {
+                    setImage('');
+                }
               }}
             />
           </b>
