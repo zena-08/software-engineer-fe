@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import AddMovie from "./add-movie.js";
+import WatchList from "./watch-list.js";
 import { MoviesContext } from "./context/movies-context.js";
 
 const baseMovieList = {
@@ -82,6 +83,7 @@ export default function App() {
       <div className="App">
         <h1>Codest Movies!</h1>
         <AddMovie />
+        {moviesList && <WatchList key="watch-list-component"/>}
       </div>
     </MoviesContext.Provider>
   );
