@@ -1,84 +1,68 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-// the below imports could be sent as props and used instead of forming cyclic dependencies as we already import App.js in index.js
-import { addWatchedMovie, add, removeWatchedMovie, getWatchedMovies, getAllMovies } from './index.js'; 
+import AddMovie from './add-movie.js';
+import { MoviesContext } from './context/movies-context.js';
 
-const getMoviesComponents = (movies) => {
-  var components = [];
+const baseMovieList = {
+  'movies-all': [
+    {
+      title: 'The Avengers',
+      image: 'http://d21lz9b0v8r1zn.cloudfront.net/wp-content/uploads//2012/03/detail.jpg',
+      comment: 'New York blows up in this!'
+    },
+    {
+      title: 'Dark City',
+      image: 'https://i.chzbgr.com/full/5569379584/hA96709E0/',
+      comment: 'This looks mysterious. Cool!'
+    },
+    {
+      title: 'Hot Tub Time Machine',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG7vNmphIcVhEcybvSvMgbTkV6EE2twHBNanKvgDx3ZS7Ivn6Dtg',
+      comment: 'Someone said this was fun. Maybe!'
+    }
+  ],
+  'movies-watched': []
+};
 
-  movies.forEach(function(movie) {
-    components.push(
-      <div className="all">
-        <div>
-          <img src={movie.image} height="100px" />
-        </div>
-        <span>
-          <a className="movie-watched" href="#" onClick={function() { addWatchedMovie(movie.title, movie.comment, movie.image) }}>
-            {movie.title}
-          </a>
-        </span>
-        <br />
-        <span>
-          {movie.comment}
-        </span>
-        <br />
-        <br />
-      </div>
-    )
-  })
+export default function App() {
+  const[moviesList, setMoviesList] = useState();
 
-  return components;
-}
+  useEffect(()=>{       // set initial state when component mounts
+    const localStorageList = localStorage;
+    if(localStorageList?.length > 0) {
+      let newList = {};
+      newList["movies-all"] = JSON.parse(localStorage.getItem('movies-all'));
+      newList["movies-watched"] = JSON.parse(localStorage.getItem('movies-watched'));
+      setMoviesList(newList);
+    } else {
+      setMoviesList(baseMovieList);
+      localStorage.setItem('movies-all', JSON.stringify(baseMovieList['movies-all']));
+      localStorage.setItem('movies-watched', JSON.stringify(baseMovieList['movies-watched']));
+    }
+  },[]);
 
-function getWatchedMoviesComponents(movies) {
-  var components = [];
+  const updateMovieList = (movie, addTo, removeFrom) => {     // common function to add and remove movies to and from the lists
+    let updatedList = moviesList;
+    updatedList[addTo].push(movie);
+    if (removeFrom) {
+      for (var i = 0; i < updatedList[removeFrom].length; i++) {
+        if (!updatedList[removeFrom][i]) continue;
+        if (updatedList[removeFrom][i].title === movie.title) {
+          updatedList[removeFrom].splice(i, 1);
+        }
+     }
+    }
+    setMoviesList({...updatedList});
+    localStorage.setItem('movies-all', JSON.stringify(updatedList['movies-all']));
+    localStorage.setItem('movies-watched', JSON.stringify(updatedList['movies-watched']));
+  };
 
-  movies.forEach(function(movie) {
-    components.push(movie && (
-      <div className="watched">
-        <div>
-          <img src={movie.image} height="100px" />
-        </div>
-        <span>
-          <a className="movie-watched" href="#" onClick={function() { removeWatchedMovie(movie.title) }}>
-            {movie.title}
-          </a>
-        </span>
-        <br />
-        <span>
-          {movie.comment}
-        </span>
-        <br />
-        <br />
-      </div>
-    ))
-  })
-
-  return components;
-}
-
-function App(props) {     //props are never being used instead the functions needed are directly being imported
-  // the below piece of component could be divided into three different components : AddMovie, WatchList, WatchedMovies
   return (
-    <div className="App">
-      <h1>Codest Movies!</h1>
-      <h1>Add movie!</h1>     
-      <b>TITLE:<br /><input type="text" onChange={function(e) { title = e.target.value; }} /></b><br />
-      <b>IMAGE URL:<br /><input type="text" onChange={function(e) { image = e.target.value; }} /></b><br />
-      <b>COMMENT:<br /><input type="text" onChange={function(e) { comment = e.target.value; }} /></b><br />
-      <input type="button" onClick={function(e) { add(title, image, comment); }} value="ADD MOVIE" />
-
-      <h1>Watchlist:</h1>
-      {getMoviesComponents(getAllMovies())}
-
-      <h1>Already watched:</h1>
-      {getWatchedMoviesComponents(getWatchedMovies())}
-    </div>
+    <MoviesContext.Provider value={{list: moviesList, updateMovieList: updateMovieList}}>
+      <div className="App">
+        <h1>Codest Movies!</h1>
+        <AddMovie />
+      </div>
+    </MoviesContext.Provider>
   );
 }
-
-var title = '';
-var image = '';
-var comment = '';
-
-export default App;
