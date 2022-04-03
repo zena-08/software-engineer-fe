@@ -15,19 +15,19 @@ code {
 
 .watched {
 	margin: 0 auto;
-	width: 30%;
+	width: 30%;   /* better to give a fixed width for this */
 }
 
 .span {
 	float: left;
 }
 
-img {
-	border-right: 60px solid black;
+img {     /* better to have a background as color black and give that div a fixed with*/
+	border-right: 60px solid black; 
 	border-left: 60px solid black;
 }
 
 .all {
 	margin: 0 auto;
-	width: 30%;
+	width: 30%;    /* better to give a fixed width for this */
 }
